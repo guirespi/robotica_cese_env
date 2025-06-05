@@ -14,9 +14,15 @@ from launch.actions import ExecuteProcess
 def generate_launch_description():
 
     # Definicion de Path
-    bag_path = os.path.join(os.path.join('/root', 'ros2_ws', 'src', 'ramirez_vazquez_pkg', 'r2b_lounge'))
-    rviz_config = os.path.join(get_package_share_directory('axt_pkg'), 'config', 'rosbag.rviz')
-    rqt_persp = os.path.join(get_package_share_directory('axt_pkg'), 'config', 'rosbag.perspective')
+    rviz_config = os.path.join(get_package_share_directory('ramirez_vazquez_pkg'), 'config', 'rosbag.rviz')
+    rqt_persp = os.path.join(get_package_share_directory('ramirez_vazquez_pkg'), 'config', 'rosbag.perspective')
+
+    bag_path_arg = DeclareLaunchArgument(
+    name='bag_path',
+    default_value=os.path.join('/root', 'ros2_ws', 'src', 'ramirez_vazquez_pkg', 'r2b_lounge'),
+    description='Archivo rosbag a simular.')
+    bag_path = LaunchConfiguration('bag_path')
+
 
     # Definicion de nodos
     rqt_node = Node(package='rqt_gui', executable='rqt_gui', name='rqt_lounge',
@@ -27,17 +33,16 @@ def generate_launch_description():
 
     # https://github.com/ros2/rosbag2?tab=readme-ov-file#using-in-launch
     bag_node = launch.actions.ExecuteProcess(
-        cmd=['ros2','bag','play', bag_path, '-r2.0', '--loop']) 
+        cmd=['ros2','bag','play', bag_path, '-r2.0', '--loop'])
+
     
     # Create the launch description and populate
     ld = LaunchDescription()
 
     # Add any actions
-    ld.add_action(bag_message)
+    ld.add_action(bag_path_arg)
     ld.add_action(bag_node)    
-    ld.add_action(rqt_message)
     ld.add_action(rqt_node)
-    ld.add_action(rviz_message)
     ld.add_action(rviz_node)
 
     return ld
