@@ -10,7 +10,8 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        ('share/' + package_name + '/launch', ['launch/tp2_e1.launch.py'])
+        ('share/' + package_name + '/launch', ['launch/tp2_e1.launch.py']),
+        ('share/' + package_name + '/launch', ['launch/tp2_e2.launch.py'])
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -22,7 +23,9 @@ setup(
     entry_points={
         'console_scripts': [
             'srv = tp_pkg.tp2_e1_count_srv:main',
-            'client = tp_pkg.tp2_e1_count_client:main'
+            'client = tp_pkg.tp2_e1_count_client:main',
+            'action_srv = tp_pkg.tp_e2_echo_action_srv:main',
+            'action_client = tp_pkg.tp_e2_echo_action_client:main'
         ]
     },
 )

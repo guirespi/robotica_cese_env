@@ -1,0 +1,8 @@
+# ----------- Goal -----------
+string echo
+---
+# ----------- Result -----------
+int32 echoed_words
+---
+# ----------- Feedback -----------
+string echo_current
